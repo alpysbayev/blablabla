@@ -9,21 +9,27 @@ import java.util.Set;
 
 @Data
 @Entity(name ="devices")
-public class Device extends BaseEntity{
+public class Device extends BaseEntity {
 
-    @Column(name="imei")
+    @Column(name = "imei")
     private String imei;
-    @Column(name="model")
+    @Column(name = "model")
     private String model;
-    @Column(name="manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
-    @Column(name="comission")
+    @Column(name = "comission")
     private Integer comission;
-    @Column(name="public_key")
+    @Column(name = "public_key")
     private String public_key;
 
-    @OneToMany(mappedBy = "device", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "device", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private Set<SmartContract> smartContracts = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "devices_smart_contracts_",
+            joinColumns = @JoinColumn(name = "device_id"),
+            inverseJoinColumns = @JoinColumn(name = "smart_contract_id"))
     private Set<SmartContract> smartContracts = new HashSet<>();
 
 
@@ -32,8 +38,9 @@ public class Device extends BaseEntity{
     private User user;
 
 
-    public void addSmartContract(SmartContract smartContract) {
-        smartContracts.add(smartContract);
-        smartContract.setDevice(this);
-    }
+//    public void addSmartContract(SmartContract smartContract) {
+//        smartContracts.add(smartContract);
+//        smartContract.setDevice(this);
+//    }
+
 }
