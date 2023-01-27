@@ -1,17 +1,16 @@
 package com.prometeo.drp_final.service;
 
 
+import com.prometeo.drp_final.model.entity.Role;
 import com.prometeo.drp_final.model.entity.Status;
 import com.prometeo.drp_final.model.entity.User;
 import com.prometeo.drp_final.repository.UserRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-@Repository
+@Service
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
@@ -32,5 +31,21 @@ public class UserServiceImpl implements UserService{
         user.setStatus(Status.ACTIVE);
         userRepository.save(user);
         return true;
+    }
+
+    @Override
+    public Optional<User> getByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> getById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public void setRoleToUser(User user, Role role) {
+        user.setRole(role);
+        userRepository.save(user);
     }
 }
