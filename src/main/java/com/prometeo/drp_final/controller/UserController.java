@@ -3,6 +3,7 @@ package com.prometeo.drp_final.controller;
 import com.prometeo.drp_final.model.entity.Role;
 import com.prometeo.drp_final.model.entity.User;
 import com.prometeo.drp_final.model.frontend.SetRoleDto;
+import com.prometeo.drp_final.model.frontend.UserDto;
 import com.prometeo.drp_final.service.RoleService;
 import com.prometeo.drp_final.service.UserService;
 import com.prometeo.drp_final.utils.exception.InventException;
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,19 +28,10 @@ public class UserController {
         this.roleService = roleService;
     }
 
-    @PostMapping("admin/users/roles")
-    public void setRole(@RequestBody SetRoleDto dto) {
-        Optional<User> userExistence = userService.getByEmail(dto.getEmail());
-        Optional<Role> roleExistence = roleService.getByName(dto.getRole());
 
-        if(userExistence.isPresent() && roleExistence.isPresent()) {
-            User user = userExistence.get();
-            Role role = roleExistence.get();
-
-            userService.setRoleToUser(user, role);
-        }
-    }
-
-
+//    @GetMapping("admin/users")
+//    public List<UserDto> getUsers() {
+//
+//    }
 
 }

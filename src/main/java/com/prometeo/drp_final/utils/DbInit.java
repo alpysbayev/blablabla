@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -48,7 +49,7 @@ public class DbInit {
         if (roleRepository.findAll().isEmpty()) {
             try {
 
-                for (String name : Set.of("ADMIN", "USER1", "USER2")) {
+                for (String name : Arrays.asList("SUPERADMIN", "ADMIN", "USER1", "USER2")) {
                     Role role = new Role();
                     role.setName(name);role.setStatus(Status.ACTIVE);role.setCreated(new Date());role.setUpdated(new Date());
                     roleRepository.save(role);
@@ -89,7 +90,7 @@ public class DbInit {
                 user.setEmail(email);user.setEmailConfirmed(true);user.setConfirmationKey("AAAA");
                 user.setPassword(passwordEncoder.encode(password));user.setWallet_pk("Wallet_PK");
                 user.setStatus(Status.ACTIVE);user.setCreated(new Date());user.setUpdated(new Date());
-                user.setRole(roleRepository.findByName("ADMIN").get());
+                user.setRole(roleRepository.findByName("SUPERADMIN").get());
                 userRepository.save(user);
 
             }

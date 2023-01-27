@@ -26,6 +26,7 @@ public class SecurityConfiguration {
         .authorizeHttpRequests()
         .requestMatchers("/api/v1/auth/**")
         .permitAll()
+            .requestMatchers("api/v1/role/*").hasAnyRole("SUPERADMIN", "ADMIN")
         .anyRequest()
         .authenticated()
         .and()
